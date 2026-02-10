@@ -2,7 +2,7 @@
 layout: default
 ---
 
-# Hi, I'm Meenakshi 👋
+# Hi, I'm Meenakshi Manoj Nair
 
 Welcome to my portfolio.
 
@@ -15,6 +15,7 @@ I work with Python, R, SQL, and real-world datasets.
 - SQL
 - Data Visualization
 - Statistical Analysis
+
 
 ## Projects
 - Obesity & Nutrition Analysis (CDC Data)
