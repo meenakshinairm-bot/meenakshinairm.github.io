@@ -6,18 +6,32 @@ layout: default
 
 Welcome to my portfolio.
 
-I'm a Master's student focused on data analysis, visualization, and research.
-I work with Python, R, SQL, and real-world datasets.
+I am a Master's student specializing in data analysis, statistical modeling, and machine learning.  
+I work with real-world datasets to extract insights, build predictive models, and communicate findings through clear visualizations and storytelling.
 
 ## Skills
-- Python (Pandas, NumPy, Matplotlib)
-- R (ggplot2, Shiny)
+
+**Programming & Tools**
+- Python (Pandas, NumPy, Matplotlib, Scikit-learn)
+- R (tidyverse, ggplot2, Shiny, sf)
 - SQL
-- Data Visualization
-- Statistical Analysis
+- Git & GitHub
+
+**Data Analysis**
+- Exploratory Data Analysis (EDA)
+- Data Cleaning & Transformation
+- Statistical Modeling (Linear & Logistic Regression)
+- Time-Series Analysis
+- Geographic & Spatial Analysis
+- Data Visualization & Storytelling
+
+**Machine Learning**
+- Classification (KNN, Gradient Boosting, Neural Networks)
+- Feature Engineering & Selection (RFECV, PCA)
+- Model Evaluation & Cross-Validation
+- Hyperparameter Tuning
 
 
-## Projects
 ## Projects
 
 - [Telco Customer Churn Prediction (Machine Learning)](projects/telco-churn-ml.md)  
