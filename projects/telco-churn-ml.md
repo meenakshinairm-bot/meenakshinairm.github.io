@@ -138,7 +138,7 @@ These insights can support targeted retention campaigns and contract restructuri
 
 Full preprocessing pipeline, modeling workflow, and evaluation code:
 
-🔗 [GitHub Repository](YOUR_REPO_LINK_HERE)
+🔗 [GitHub Repository](https://github.com/meenakshinairm-bot/meenakshinairm.github.io/blob/main/projects/code/Telco%20churn.ipynb)
 
 ---
 
