@@ -1,0 +1,120 @@
+---
+layout: default
+title: Unemployment & Economic Indicators Analysis
+---
+
+# Unemployment & Economic Indicators Analysis
+
+## Overview
+This project analyzes unemployment trends and their relationship with economic indicators using multiple international and regional datasets.  
+
+The objective was to investigate how GDP relates to unemployment patterns and to identify structural differences across age groups and time periods.
+
+---
+
+## Problem Statement
+Unemployment is a critical macroeconomic indicator that reflects economic stability and labor market health.  
+
+This project aims to:
+
+- Examine global and regional unemployment trends  
+- Analyze the relationship between GDP and unemployment  
+- Compare youth and adult unemployment patterns  
+- Apply statistical modeling to quantify economic relationships  
+
+---
+
+## Data Sources
+
+The analysis integrates multiple datasets:
+
+- International unemployment data from the International Labour Organization (ILOSTAT)  
+- Regional labor statistics datasets  
+- Global GDP indicators  
+
+These datasets were cleaned, merged, and transformed for consistent analysis.
+
+---
+
+## Methodology
+
+### 1. Data Cleaning & Preparation
+- Removed missing and inconsistent records  
+- Standardized country and year formats  
+- Aggregated unemployment values where necessary  
+- Converted economic indicators to numeric format  
+- Applied log transformation to GDP for modeling  
+
+---
+
+### 2. Exploratory Data Analysis (EDA)
+- Visualized unemployment trends across years  
+- Compared youth (15–24) and adult unemployment patterns  
+- Examined distribution of unemployment levels  
+- Identified structural differences across age groups  
+
+---
+
+### 3. Statistical Analysis
+
+#### Correlation Analysis
+- Measured correlation between GDP and unemployment  
+- Identified weak but statistically measurable relationship  
+
+#### Log Transformation
+- Applied log transformation to GDP to reduce skewness  
+- Improved interpretability of regression model  
+
+#### Linear Regression
+- Modeled unemployment as a function of log(GDP)  
+- Evaluated model performance using:
+  - R-squared  
+  - Coefficient significance  
+  - Residual diagnostics  
+
+---
+
+## Key Findings
+
+- Youth unemployment is consistently higher than adult unemployment  
+- Higher GDP levels are associated with lower unemployment rates  
+- The GDP–unemployment relationship is statistically significant but explains only a small portion of variance  
+- Structural labor market factors likely play a larger role than GDP alone  
+
+---
+
+## Tools & Technologies
+
+- R  
+- tidyverse  
+- ggplot2  
+- dplyr  
+- Linear regression modeling  
+- R Markdown (HTML output)
+
+---
+
+## Technical Highlights
+
+- Multi-dataset integration  
+- Data transformation and feature engineering  
+- Log transformation of economic indicators  
+- Correlation analysis  
+- Linear regression modeling  
+- Age-group segmentation analysis  
+
+---
+
+## Conclusion
+
+This project demonstrates an end-to-end analytical workflow — from data cleaning and transformation to statistical modeling and interpretation.  
+
+The findings highlight the complexity of labor market dynamics and show that macroeconomic indicators such as GDP, while relevant, do not fully explain unemployment behavior.
+
+---
+
+## Project Output
+
+The complete analysis was conducted in R and exported as an HTML report.  
+
+[View Full Analysis (HTML Report)](YOUR_HTML_LINK_HERE)
