@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Unemployment & Economic Indicators Analysis
+title: Unemployment Trends Analysis
 ---
 
 # Unemployment & Economic Indicators Analysis
