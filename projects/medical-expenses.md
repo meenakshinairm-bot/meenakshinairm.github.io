@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Medical Expense Prediction using Regression Models
+title: Medical Expenses Prediction Using Regression
 ---
 
 # Medical Expense Prediction using Regression Models
