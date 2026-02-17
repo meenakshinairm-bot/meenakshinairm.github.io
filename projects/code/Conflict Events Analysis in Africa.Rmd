@@ -1,0 +1,326 @@
+---
+title: "Conflict Events Analysis in Africa"
+author: "Meenakshi Manoj Nair"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    code_folding: "hide"  
+---
+
+<style type="text/css">
+  body{
+  font-size: 14pt;
+  }
+</style>
+
+
+## Introduction
+For this project, I decided to analyze the continent of Africa. The Armed Conflict Location & Event Data (ACLED) dataset provides a comprehensive record of conflict events across the continent, including information on event types, actors, fatalities, and locations. This report focuses on analyzing conflict patterns in Africa to uncover trends, identify hotspots, and understand the key drivers of violence. By visualizing and interpreting these data, the analysis aims to provide deeper insight into the dynamics of conflict in the region and its implications for stability and development.
+
+### Setup
+
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(sf)
+library(knitr)
+library(ggplot2)
+library(viridis)
+library(dplyr)
+
+```
+
+Load the ACLED dataset
+
+```{r}
+acled_data <- read.csv("2021-01-01-2024-12-31-Eastern_Africa-Middle_Africa-Northern_Africa-Southern_Africa-Western_Africa.csv")
+```
+
+Inspect the dataset
+```{r, results = 'hide'}
+head(acled_data)  # View the first few rows
+str(acled_data)   # Check the structure of the dataset
+summary(acled_data)  # Get summary statistics
+```
+
+Check for missing values
+```{r, results = 'hide'}
+colSums(is.na(acled_data))
+```
+
+Regions
+```{r}
+region_list <- data.frame(
+  Regions = c("Western Africa","Northern Africa","Eastern Africa","Middle Africa","Southern Africa")
+)
+knitr::kable(region_list)
+```
+
+
+Summary statistics for numeric variables
+```{r, results = 'hide'}
+summary(acled_data$fatalities)
+summary(acled_data$year)
+```
+
+Analysis of conflict events over time.
+
+```{r}
+events_by_year <- acled_data %>% group_by(year) %>% summarise(count = n(), 
+.groups = "drop")
+
+head(events_by_year)
+```
+
+Plot events over time - This is a line plot illustrating conflict events over time through all five regions in a four year span (2021 - 2024). THe number has steadily risen over this time period. 
+```{r}
+ggplot(events_by_year, aes(x = year, y = count)) +
+  geom_line(color = "steelblue") +
+  labs(title = "Conflict Events Over Time",
+       x = "Year", y = "Number of Events") +
+  theme_minimal()
+```
+
+### Analyzing types of conflicts and the severity of them.
+
+
+```{r}
+events_by_type <- acled_data %>% group_by(event_type) %>% summarize(count = n())
+```
+
+Distribution of the conflict events - when we divided the conflicts by the types, our dataset shows that protests are the most recorded type of conflict. Battles, violence against civilians, strategic developments, riots, and explosions/remote violence are among the other types of conflict impacting the regions. There is a possibility that event types could overlap (a battle could be sparked by a protest or violence against civilians could occur during a battle). This may have some influence on the data as well. 
+```{r}
+ggplot(events_by_type, aes(x = reorder(event_type, count), y = count, fill = event_type)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_viridis(discrete = TRUE) +  # Use viridis color palette
+  labs(title = "Conflict Events by Type", x = "Event Type", y = "Number of Events") +
+  theme_minimal() +
+  theme(legend.position = "none")  
+```
+
+Count of events by region
+
+```{r}
+events_by_region <- acled_data %>% 
+  group_by(region) %>% 
+  summarise(event_count = n())
+  
+  head(events_by_region)
+```
+
+Plot number of events by region - plotting the events by region they occur in shows that Eastern Africa leads all regions in amount of conflict with Western Africa slightly beneath it. However, as an upcoming visualization will show, Western Africa leads in the number of fatalities. This indicates that the types of conflicts in Western Africa are more violent. 
+```{r}
+ggplot(events_by_region, aes(x = reorder(region, event_count), y = event_count, fill = region)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_viridis(discrete = TRUE) +
+  labs(title = "Conflict Events by Region", x = "Region", y = "Number of Events") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+Total fatalities by region
+```{r}
+fatalities_by_region <- acled_data %>% 
+  group_by(region) %>% 
+  summarise(total_fatalities = sum(fatalities, na.rm = TRUE))
+  
+  head(fatalities_by_region)
+```
+
+Plot fatalities by region - as mentioned previously, in this visualization we divide the regions by the total fatalities in them. Western Africa exceeds all other regions values. 
+```{r}
+
+ggplot(fatalities_by_region, aes(x = reorder(region, total_fatalities), y = total_fatalities, fill = region)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_viridis(discrete = TRUE) +
+  labs(title = "Total Fatalities by Region", x = "Region", y = "Total Fatalities") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+Count events by year and region
+```{r}
+events_by_year_region <- acled_data %>%
+  group_by(region, year) %>%
+  summarise(event_count = n())
+  
+  (events_by_year_region)
+```
+
+Plot events by region over time - this line plot shows the conflict events over time by each region. So sometime between 2022 and 2023, Eastern Africa overtook Western Africa in terms of the amount of conflict arising in the region. Northern Africa also overtook Middle Africa during this time as well. Southern Africa has remeained relatively low with the amount of conflict. 
+```{r}
+ggplot(events_by_year_region, aes(x = year, y = event_count, color = region)) +
+  geom_line(size = 1) +
+  labs(title = "Conflict Events Over Time by Region", x = "Year", y = "Number of Events") +
+  theme_minimal() +
+  theme(legend.position = "top") +
+  scale_color_viridis(discrete = TRUE)
+```
+
+Total fatalities by year and region - this is another series of bar plots showing the amount of fatalities for each region individually. 
+```{r}
+
+region_fatalities <- acled_data %>%
+  filter(region == "Western Africa") %>%
+  group_by(year) %>%
+  summarise(total_fatalities = sum(fatalities, na.rm = TRUE), .groups = "drop")
+
+ggplot(region_fatalities, aes(x = factor(year), y = total_fatalities)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  geom_text(aes(label=total_fatalities), vjust=-0.5, size=3) +
+  labs(title = "Total Fatalities Per Year in Western Africa",
+       x = "Year",
+       y = "Total Fatalities") +
+  theme(plot.title=element_text(hjust=.5),
+        plot.subtitle=element_text(hjust=.5))
+```
+
+Total fatalities by year
+```{r}
+fatalities_by_year <- acled_data %>%
+  group_by(year) %>%
+  summarise(total_fatalities = sum(fatalities, na.rm = TRUE), .groups = "drop")
+  
+  head(fatalities_by_year)
+```
+  
+Plot fatalities over time - this line plot shows the total amount of fatalities plotted over this four year time period for all of Africa. It has risen overall with varying degrees throughout this time. The sharpest being during 2022 and 2023.
+```{r}
+ggplot(fatalities_by_year, aes(x = year, y = total_fatalities)) +
+  geom_line(color = "red") +
+  labs(title = "Fatalities Over Time",
+       x = "Year", y = "Total Fatalities") +
+  theme_minimal()  
+```
+
+Map conflict events (requires latitude and longitude) - The following datamap visualizations highlight which regions have what type of conflict events aflicting them as well as how many fatalities are occuring. 
+```{r}
+ggplot(acled_data, aes(x = longitude, y = latitude)) +
+  borders("world", colour = "gray50", fill = "lightgray") +
+  geom_point(aes(size = fatalities, color = event_type), alpha = 0.6) +
+  labs(title = "Conflict Events in Africa",
+       x = "Longitude", y = "Latitude") +
+  theme_minimal()  
+```
+
+```{r}
+ggplot(acled_data, aes(x = longitude, y = latitude)) +
+  borders("world", colour = "gray50", fill = "lightgray") +
+  geom_point(aes(size = fatalities, color = event_type), alpha = 0.6) +
+  labs(title = "Conflict Events in Africa",
+       x = "Longitude", y = "Latitude") +
+  theme_minimal() +
+  coord_cartesian(xlim = c(-20, 55), ylim = c(-40, 40))
+```
+
+Count the number of events by country
+
+```{r}
+events_by_country <- acled_data %>%
+  group_by(country) %>%
+  summarise(event_count = n())
+```
+
+Plot the number of events by country
+```{r}
+# List of West African countries
+west_africa_countries <- c("Nigeria", "Ghana", "Mali", "Burkina Faso", "Niger", 
+                           "Cote d'Ivoire", "Senegal", "Liberia", "Sierra Leone", 
+                           "Mauritania", "Guinea", "Guinea-Bissau", "The Gambia", 
+                           "Togo", "Benin", "Cabo Verde")
+
+
+west_africa_data <- acled_data %>%
+  filter(country %in% west_africa_countries)
+
+
+events_by_country <- west_africa_data %>%
+  group_by(country) %>%
+  summarise(event_count = n())
+
+
+ggplot(events_by_country, aes(x = reorder(country, event_count), y = event_count, fill = country)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +  # Flip the axes for better readability
+  labs(title = "Number of Conflict Events by Country (Western Africa)", 
+       x = "Country", 
+       y = "Number of Events") +
+  theme_minimal() +
+  theme(legend.position = "none") 
+```
+
+West African countries 
+
+```{r}
+#List of West African countries
+west_africa_countries <- c("Nigeria", "Ghana", "Mali", "Burkina Faso", "Niger", 
+                           "Cote d'Ivoire", "Senegal", "Liberia", "Sierra Leone", 
+                           "Mauritania", "Guinea", "Guinea-Bissau", "The Gambia", 
+                           "Togo", "Benin", "Cabo Verde")
+
+# Coordinates 
+country_coordinates <- list(
+  "Nigeria" = list(xlim = c(3, 15), ylim = c(4, 14)),
+  "Ghana" = list(xlim = c(-3, 2), ylim = c(4, 11)),
+  "Mali" = list(xlim = c(-15, 15), ylim = c(10, 25)),
+  "Burkina Faso" = list(xlim = c(-5, 2), ylim = c(10, 15)),
+  "Niger" = list(xlim = c(10, 20), ylim = c(12, 23)),
+  "Cote d'Ivoire" = list(xlim = c(-7, 5), ylim = c(4, 11)),
+  "Senegal" = list(xlim = c(-17, -12), ylim = c(12, 17)),
+  "Liberia" = list(xlim = c(-10, -5), ylim = c(4, 11)),
+  "Sierra Leone" = list(xlim = c(-13, -7), ylim = c(7, 10)),
+  "Mauritania" = list(xlim = c(-20, -10), ylim = c(15, 30)),
+  "Guinea" = list(xlim = c(-15, -7), ylim = c(7, 13)),
+  "Guinea-Bissau" = list(xlim = c(-16, -13), ylim = c(10, 12)),
+  "The Gambia" = list(xlim = c(-16, -13), ylim = c(12, 14)),
+  "Togo" = list(xlim = c(-1, 2), ylim = c(6, 11)),
+  "Benin" = list(xlim = c(1, 3), ylim = c(6, 12)),
+  "Cabo Verde" = list(xlim = c(-25, -21), ylim = c(14, 17))
+)
+
+# Loop 
+for (country in west_africa_countries) {
+  # Get coordinates for the current country
+  coords <- country_coordinates[[country]]
+  
+  # plot loop
+  nam <- paste0(gsub(" ", "_", country), "_plot")  
+  
+  # plot creator
+  assign(nam,
+         ggplot(acled_data %>% filter(country == country), aes(x = longitude, y = latitude)) +
+           borders("world", colour = "gray50", fill = "lightgray") +
+           geom_point(aes(size = fatalities, color = event_type), alpha = 0.6) +
+           labs(title = paste("Conflict Events in", country), 
+                x = "Longitude", y = "Latitude") +
+           theme_minimal() +
+           theme(legend.position = "none") +
+           coord_cartesian(xlim = coords$xlim, ylim = coords$ylim)  # Use correct access to xlim and ylim
+  )
+}
+```
+
+
+The following maps show the physical distribution of events in the top 3 most violent countries in West Africa, it should be noted that these 3 countries are also some of the largest in this region.
+## Nigeria
+```{r}
+Nigeria_plot
+```
+
+
+## Burkina Faso
+```{r}
+Burkina_Faso_plot
+```
+
+
+## Mali
+```{r}
+Mali_plot
+```
+
+# Conclusion
+When we analyze conflict events across Africa from 2021 to 2024, the data reveals a steady increase in the frequency of conflict. Eastern Africa leads in the number of events, while Western Africa leads in fatalities, suggesting that conflicts in the latter region are more deadly. Protest is the most common type of conflict, followed by battle and violence against civilians. Western African countries such as Nigeria, Mali, and Burkina Faso emerge as key contributors to conflict activity. This finding highlights the need for deeper investigation into the regional driver of conflict and suggests that a correlation study could help uncover the underlying factor, such as governance and socio-economic condition, influencing the intensity and spread of violence.
