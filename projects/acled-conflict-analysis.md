@@ -178,7 +178,7 @@ Spatial visualization showed:
 
 View complete report with code and visualizations:
 
-[View Full HTML Report](https://github.com/meenakshinairm-bot/meenakshinairm.github.io/blob/main/projects/code/Conflict-Events-Analysis-in-Africa.pdf)
+[View Full PDF Report](https://github.com/meenakshinairm-bot/meenakshinairm.github.io/blob/main/projects/code/Conflict-Events-Analysis-in-Africa.pdf)
 
 ---
 
@@ -186,7 +186,7 @@ View complete report with code and visualizations:
 
 View R Markdown source code:
 
-[View R Markdown File](../rmd/acled-conflict-analysis.Rmd)
+[View R Markdown File](https://github.com/meenakshinairm-bot/meenakshinairm.github.io/blob/main/projects/code/Conflict%20Events%20Analysis%20in%20Africa.Rmd)
 
 ---
 
