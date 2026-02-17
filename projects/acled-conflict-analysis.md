@@ -178,7 +178,7 @@ Spatial visualization showed:
 
 View complete report with code and visualizations:
 
-[View Full HTML Report](../html/acled-conflict-analysis.html)
+[View Full HTML Report](https://github.com/meenakshinairm-bot/meenakshinairm.github.io/blob/main/projects/code/Conflict-Events-Analysis-in-Africa.pdf)
 
 ---
 
