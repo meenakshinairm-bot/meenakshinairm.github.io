@@ -1,7 +1,6 @@
 ---
 title: "Symptom Management and Quality of Life in Breast Cancer Patients: Integrating Ayurveda with Chemotherapy"
 author: "Meenakshi Manoj Nair"
-date: 2026-02-17
 categories: [Healthcare, Research, Ayurveda, Data Science]
 tags: [Ayurveda, Breast Cancer, Quality of Life, Integrative Medicine, Research Methods]
 ---
