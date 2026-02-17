@@ -126,15 +126,7 @@ When combining inactivity and diet:
 
 View complete report with code and visualizations:
 
-[View Full HTML Report](../html/obesity-visualization.html)
-
----
-
-## Code Availability
-
-View R Markdown source code:
-
-[View R Markdown File](../rmd/obesity-visualization.Rmd)
+[View Full PDF Report](https://github.com/meenakshinairm-bot/meenakshinairm.github.io/blob/main/projects/code/Obesity.pdf)
 
 ---
 
