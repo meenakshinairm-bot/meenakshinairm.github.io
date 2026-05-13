@@ -13,7 +13,7 @@ The objective is not only to classify fashion images accurately, but also to inv
 
 ## Project Repository
 
-[View GitHub Repository]((https://github.com/meenakshinairm-bot/meenakshinairm.github.io/blob/main/projects/code/DeepFashionAndPersonality.ipynb))
+[View GitHub Repository](https://github.com/meenakshinairm-bot/meenakshinairm.github.io/blob/main/projects/code/DeepFashionAndPersonality.ipynb)
 
 ---
 
