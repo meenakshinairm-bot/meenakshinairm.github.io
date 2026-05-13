@@ -55,3 +55,6 @@ I work with real-world datasets to extract insights, build predictive models, an
 - [Ayurveda & Chemotherapy Research Study](projects/ayurveda-chemotherapy-study.md)  
   Comparative longitudinal research proposal examining integrative oncology outcomes.
 
+- [DeepFashion CNN Classification & Personality Mapping]()
+  Deep learning computer vision project using a custom CNN to classify fashion images and map clothing categories to synthetic fashion personality traits.
+
